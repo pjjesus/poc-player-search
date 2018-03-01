@@ -10,10 +10,7 @@ import org.springframework.context.annotation.PropertySources;
 
 @PropertySources({@PropertySource("classpath:kafka-config.properties")})
 @SpringBootApplication(scanBasePackages = {"com.lotto"},
-        exclude = {
-                ElasticsearchAutoConfiguration.class,
-                MongoAutoConfiguration.class,
-                MongoDataAutoConfiguration.class})
+        exclude = {ElasticsearchAutoConfiguration.class, MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 public class NotifierSimulatorApp {
 
     public static void main(String[] args) {
