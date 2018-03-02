@@ -10,11 +10,11 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>player-search-domain</module>
-        <module>player-search-configuration</module>
+        <module>player-domain</module>
+        <module>player-configuration</module>
         <module>player-search-data-pump</module>
         <module>player-search-service</module>
-        <module>notifier-simulator</module>
+        <module>player-service</module>
     </modules>
 
     <properties>
