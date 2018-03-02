@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
 /**
@@ -31,5 +33,17 @@ public class Serializers {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         return mapper;
+    }
+
+    @Bean
+    public BeanUtilsBean playerBeanUtils() {
+        return new BeanUtilsBean() {
+            @Override
+            public void copyProperty(Object dest, String name, Object value) throws IllegalAccessException, InvocationTargetException {
+                if (null != value) {
+                    super.copyProperty(dest, name, value);
+                }
+            }
+        };
     }
 }

@@ -1,9 +1,9 @@
 package com.devchaos.player.search.data.pump.consumers.kafka;
 
-import com.devchaos.player.search.data.pump.repositories.es.EsPlayersRepository;
-import com.devchaos.player.search.data.pump.repositories.mongo.PlayersRepository;
 import com.devchaos.player.domain.Player;
 import com.devchaos.player.domain.PlayerEvent;
+import com.devchaos.player.search.data.pump.repositories.es.EsPlayersRepository;
+import com.devchaos.player.search.data.pump.repositories.mongo.PlayersRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +33,8 @@ public class PlayerEventConsumer {
         log.info("Processing topic = {}, partition = {}, offset = {}, playerEvent = {}", topic, partition, offset, playerEvent);
 
         Optional<Player> player = playersRepository.findById(playerEvent.getPlayerId());
-        log.info("Player = {}", player);
-
         player.ifPresent(p -> esPlayersRepository.save(p));
+
         log.info("Player = {} was indexed", player);
     }
 }

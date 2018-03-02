@@ -20,7 +20,13 @@ public class PlayerEvent {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime producedDate;
 
+    @SuppressWarnings("unused")
     public PlayerEvent() {
+        //for kafka serializer
+    }
+
+    public PlayerEvent(String playerId) {
+        this.playerId = playerId;
         this.producedDate = LocalDateTime.now();
     }
 }
