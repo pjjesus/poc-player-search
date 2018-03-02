@@ -39,7 +39,7 @@ public class PlayerController {
     }
 
     @GetMapping("{id}")
-    public Player player(@PathVariable String id) throws PlayerNotFoundException {
+    public Player get(@PathVariable String id) throws PlayerNotFoundException {
         return playerRepository.findById(id).orElseThrow(PlayerNotFoundException::new);
     }
 
@@ -49,7 +49,7 @@ public class PlayerController {
     }
 
     @PutMapping("{id}")
-    public Player createOrUpdate(@PathVariable String id, @RequestBody Player newData) throws PlayerNotFoundException, InvocationTargetException, IllegalAccessException {
+    public Player update(@PathVariable String id, @RequestBody Player newData) throws PlayerNotFoundException, InvocationTargetException, IllegalAccessException {
         Player player = playerRepository.findById(id).orElseThrow(PlayerNotFoundException::new);
         playerBeanUtils.copyProperties(player, newData);
         return playerRepository.save(player);
