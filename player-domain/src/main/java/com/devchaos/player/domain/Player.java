@@ -22,7 +22,7 @@ public class Player {
     private String id;
 
 
-    @MultiField(mainField = @Field(type = FieldType.text, store = true),
+    @MultiField(mainField = @Field(type = FieldType.text),
             otherFields = {
                     @InnerField(suffix = "lowercase", type = FieldType.text, indexAnalyzer = "lowercasean", searchAnalyzer = "standard")
             }
@@ -30,11 +30,13 @@ public class Player {
     @org.springframework.data.mongodb.core.mapping.Field("particulars.firstname")
     private String firstName;
 
-    @MultiField(mainField = @Field(type = FieldType.text, store = true),
+    @MultiField(mainField = @Field(type = FieldType.text),
             otherFields = {
                     @InnerField(suffix = "lowercase", type = FieldType.text, indexAnalyzer = "lowercasean", searchAnalyzer = "standard")
             }
     )
     @org.springframework.data.mongodb.core.mapping.Field("particulars.lastname")
     private String lastName;
+
+    private Boolean verified = false;
 }
