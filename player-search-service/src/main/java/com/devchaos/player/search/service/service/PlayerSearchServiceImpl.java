@@ -1,7 +1,7 @@
 package com.devchaos.player.search.service.service;
 
 import com.devchaos.player.domain.Player;
-import com.devchaos.player.search.service.domain.AuthorizedQueryParam;
+import com.devchaos.player.search.service.domain.AuthorizedSearchParameters;
 import com.devchaos.player.search.service.repositories.es.EsPlayersRepository;
 import com.google.common.collect.Lists;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -22,11 +22,11 @@ public class PlayerSearchServiceImpl implements PlayerSearchService {
     EsPlayersRepository esPlayersRepository;
 
     @Override
-    public List<Player> search(MultiValueMap<String, String> queryParams) {
-        AuthorizedQueryParam.allParamsAreValid(queryParams.keySet());
+    public List<Player> search(final MultiValueMap<String, String> queryParams) {
+        AuthorizedSearchParameters.validate(queryParams.keySet());
 
         final BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        queryParams.entrySet().forEach(e -> boolQueryBuilder.must(AuthorizedQueryParam.getValue(e)));
+        queryParams.entrySet().forEach(e -> boolQueryBuilder.must(AuthorizedSearchParameters.build(e)));
 
         return Lists.newArrayList(esPlayersRepository.search(boolQueryBuilder));
     }
