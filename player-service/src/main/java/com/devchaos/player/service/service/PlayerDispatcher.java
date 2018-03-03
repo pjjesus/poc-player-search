@@ -19,7 +19,7 @@ public class PlayerDispatcher {
     @Autowired
     private KafkaTemplate<String, PlayerEvent> playerEventKafkaTemplate;
 
-    public boolean dispatch(PlayerEvent playerEvent) throws ExecutionException, InterruptedException {
+    public void dispatch(PlayerEvent playerEvent) throws ExecutionException, InterruptedException {
         SendResult<String, PlayerEvent> sendResult = playerEventKafkaTemplate.sendDefault(playerEvent.getPlayerId(), playerEvent).get();
         RecordMetadata recordMetadata = sendResult.getRecordMetadata();
 
@@ -27,7 +27,5 @@ public class PlayerDispatcher {
             LOGGER.info("topic = {}, partition = {}, offset = {}, playerEvent = {}",
                     recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset(), playerEvent);
         }
-
-        return true;
     }
 }

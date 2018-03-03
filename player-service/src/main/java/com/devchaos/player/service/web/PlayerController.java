@@ -63,7 +63,7 @@ public class PlayerController {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity handleException(HttpServletRequest req, Exception ex) {
-        LOGGER.error("Error while processing request {}", req, ex);
+        LOGGER.error("Error while processing request {}{}", req.getRequestURI(), req.getQueryString(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

@@ -1,4 +1,4 @@
-package com.devchaos.player.configuration.kafka.producer;
+package com.devchaos.player.configuration.kafka;
 
 import com.devchaos.player.configuration.kafka.KafkaProperties;
 import com.devchaos.player.domain.PlayerEvent;

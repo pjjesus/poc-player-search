@@ -21,7 +21,6 @@ public class Player {
     @Id
     private String id;
 
-
     @MultiField(mainField = @Field(type = FieldType.text),
             otherFields = {
                     @InnerField(suffix = "lowercase", type = FieldType.text, indexAnalyzer = "lowercasean", searchAnalyzer = "standard")
