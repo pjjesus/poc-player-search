@@ -1,5 +1,6 @@
 package com.devchaos.player.domain;
 
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -12,6 +13,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
  * @author Paulo Jesus
  */
 @Data
+@Builder
 @org.springframework.data.mongodb.core.mapping.Document(collection = Player.COLLECTION_NAME)
 @org.springframework.data.elasticsearch.annotations.Document(indexName = Player.COLLECTION_NAME, type = "player")
 @Setting(settingPath = "es-lowercase-analyzer.json")
