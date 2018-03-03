@@ -22,10 +22,9 @@ public class PlayerSearchServiceImpl implements PlayerSearchService {
     EsPlayersRepository esPlayersRepository;
 
     @Override
-    public List<Player> search(final MultiValueMap<String, String> queryParams) {
-        AuthorizedSearchParameters.validate(queryParams.keySet());
-
+    public List<Player> search(final MultiValueMap<String, String> queryParams) throws IllegalArgumentException {
         final BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+
         queryParams.entrySet().forEach(e -> boolQueryBuilder.must(AuthorizedSearchParameters.build(e)));
 
         return Lists.newArrayList(esPlayersRepository.search(boolQueryBuilder));

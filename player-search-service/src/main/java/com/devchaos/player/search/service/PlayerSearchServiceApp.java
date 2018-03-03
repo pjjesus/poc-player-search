@@ -14,11 +14,12 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
         @PropertySource("classpath:elasticsearch-config.properties")
 })
 @EnableElasticsearchRepositories(basePackages = {"com.devchaos.player.search.service.repositories.es"})
-@SpringBootApplication(scanBasePackages = {"com.devchaos"}, exclude = {
-        MongoAutoConfiguration.class,
-        MongoDataAutoConfiguration.class,
-        MongoRepositoriesAutoConfiguration.class,
-        KafkaAutoConfiguration.class})
+@SpringBootApplication(scanBasePackages = {"com.devchaos"},
+        exclude = {
+                MongoAutoConfiguration.class,
+                MongoDataAutoConfiguration.class,
+                MongoRepositoriesAutoConfiguration.class,
+                KafkaAutoConfiguration.class})
 public class PlayerSearchServiceApp {
     public static void main(String[] args) {
         SpringApplication.run(PlayerSearchServiceApp.class, args);

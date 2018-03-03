@@ -23,8 +23,10 @@ public class PlayerDispatcher {
         SendResult<String, PlayerEvent> sendResult = playerEventKafkaTemplate.sendDefault(playerEvent.getPlayerId(), playerEvent).get();
         RecordMetadata recordMetadata = sendResult.getRecordMetadata();
 
-        LOGGER.info("topic = {}, partition = {}, offset = {}, playerEvent = {}",
-                recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset(), playerEvent);
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("topic = {}, partition = {}, offset = {}, playerEvent = {}",
+                    recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset(), playerEvent);
+        }
 
         return true;
     }

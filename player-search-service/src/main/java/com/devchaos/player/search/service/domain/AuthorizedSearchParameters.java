@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Function;
 
 /**
@@ -29,12 +28,13 @@ public class AuthorizedSearchParameters {
         authorized = Collections.unmodifiableMap(map);
     }
 
-    public static void validate(Set<String> requestParams) {
-        requestParams.forEach(param -> Assert.isTrue(authorized.keySet().contains(param),
-                String.format("An invalid parameter '%s' was supplied - valid params are: %s", param, authorized.keySet())));
+    public static QueryBuilder build(Map.Entry<String, List<String>> entry) throws IllegalArgumentException {
+        validate(entry.getKey());
+        return authorized.get(entry.getKey()).apply(entry);
     }
 
-    public static QueryBuilder build(Map.Entry<String, List<String>> entry) {
-        return authorized.get(entry.getKey()).apply(entry);
+    private static void validate(String requestParam) throws IllegalArgumentException {
+        Assert.isTrue(authorized.keySet().contains(requestParam),
+                String.format("Invalid parameter '%s'. Valid params are: %s", requestParam, authorized.keySet()));
     }
 }

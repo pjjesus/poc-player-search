@@ -30,13 +30,13 @@ public class SearchController {
 
     @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity handleWrongRequest(HttpServletRequest req, Exception ex) {
-        LOGGER.error("Invalid search parameters", ex);
+        LOGGER.error("Invalid request '{}' parameters", req.getQueryString(), ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity handleException(HttpServletRequest req, Exception ex) {
-        LOGGER.error("Search could not be completed", ex);
+        LOGGER.error("Request error '{}'", req.getQueryString(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 
