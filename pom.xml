@@ -18,7 +18,7 @@
 
     <modules>
         <module>player-domain</module>
-        <module>player-configuration</module>
+        <module>services-configuration</module>
         <module>player-search-data-pump</module>
         <module>player-search-service</module>
         <module>player-service</module>
@@ -96,6 +96,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

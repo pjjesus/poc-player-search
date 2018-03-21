@@ -2,7 +2,6 @@ package com.devchaos.player.search.service.domain;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,8 +12,8 @@ import java.util.function.Function;
 /**
  * @author Paulo Jesus
  */
-public class AuthorizedSearchParameters {
-    private AuthorizedSearchParameters() {
+public class SearchParameters {
+    private SearchParameters() {
     }
 
     private static final Map<String, Function<Map.Entry<String, List<String>>, QueryBuilder>> authorized;
@@ -28,13 +27,14 @@ public class AuthorizedSearchParameters {
         authorized = Collections.unmodifiableMap(map);
     }
 
-    public static QueryBuilder build(Map.Entry<String, List<String>> entry) throws IllegalArgumentException {
-        validate(entry.getKey());
-        return authorized.get(entry.getKey()).apply(entry);
+    public static QueryBuilder build(Map.Entry<String, List<String>> requestParamEntry) throws InvalidSearchParamException {
+        validateParameter(requestParamEntry.getKey());
+        return authorized.get(requestParamEntry.getKey()).apply(requestParamEntry);
     }
 
-    private static void validate(String requestParam) throws IllegalArgumentException {
-        Assert.isTrue(authorized.keySet().contains(requestParam),
-                String.format("Invalid parameter '%s'. Valid params are: %s", requestParam, authorized.keySet()));
+    public static void validateParameter(String requestParam) throws InvalidSearchParamException {
+        if (!authorized.keySet().contains(requestParam)) {
+            throw new InvalidSearchParamException(String.format("Invalid parameter '%s'. Valid params are: %s", requestParam, authorized.keySet()));
+        }
     }
 }

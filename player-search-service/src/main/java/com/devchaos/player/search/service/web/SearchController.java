@@ -1,6 +1,7 @@
 package com.devchaos.player.search.service.web;
 
 import com.devchaos.player.domain.Player;
+import com.devchaos.player.search.service.domain.InvalidSearchParamException;
 import com.devchaos.player.search.service.service.PlayerSearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,11 +25,11 @@ public class SearchController {
     private PlayerSearchService playerSearchService;
 
     @GetMapping("/search")
-    public List<Player> search(@RequestParam MultiValueMap<String, String> parameters) {
+    public List<Player> search(@RequestParam MultiValueMap<String, String> parameters) throws InvalidSearchParamException {
         return playerSearchService.search(parameters);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
+    @ExceptionHandler({InvalidSearchParamException.class})
     public ResponseEntity handleWrongRequest(HttpServletRequest req, Exception ex) {
         LOGGER.error("Invalid request '{}' parameters", req.getQueryString(), ex);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());

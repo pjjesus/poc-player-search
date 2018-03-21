@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 public class PlayerEventConsumer {
-    private static final Logger log = LoggerFactory.getLogger(PlayerEventConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerEventConsumer.class);
 
     @Autowired
     private PlayersRepository playersRepository;
@@ -30,11 +30,11 @@ public class PlayerEventConsumer {
                             @Header(KafkaHeaders.RECEIVED_PARTITION_ID) int partition,
                             @Header(KafkaHeaders.RECEIVED_TOPIC) String topic) {
 
-        log.info("Processing topic = {}, partition = {}, offset = {}, playerEvent = {}", topic, partition, offset, playerEvent);
+        LOGGER.info("Processing topic = {}, partition = {}, offset = {}, playerEvent = {}", topic, partition, offset, playerEvent);
 
         Optional<Player> player = playersRepository.findById(playerEvent.getPlayerId());
         player.ifPresent(p -> esPlayersRepository.save(p));
 
-        log.info("Player = {} was indexed", player);
+        LOGGER.info("Player = {} was indexed", player);
     }
 }
