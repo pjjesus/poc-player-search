@@ -24,7 +24,7 @@ public class PlayerDispatcher {
         RecordMetadata recordMetadata = sendResult.getRecordMetadata();
 
         if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("topic = {}, partition = {}, offset = {}, playerEvent = {}",
+            LOGGER.info("dispatched player event -> topic = {}, partition = {}, offset = {}, playerEvent = {}",
                     recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset(), playerEvent);
         }
     }
